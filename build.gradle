@@ -1,0 +1,35 @@
+plugins {
+    id 'java-library'
+}
+
+version = "1.0.0"
+
+repositories {
+    mavenCentral()
+    maven {
+        url = uri("https://maven.pkg.github.com/jelovirt/org.lwdita")
+        credentials {
+            username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+            password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+        }
+    }
+}
+
+dependencies {
+    implementation 'com.elovirta.dita:org.lwdita:5.0.0'
+    implementation 'com.vladsch.flexmark:flexmark-all:0.64.0'
+}
+
+def dist = tasks.register('dist', Zip) {
+    archiveFileName = "${project.name}-${project.version}.zip"
+    from(jar) {
+        into "lib"
+    }
+    from("src/main") {
+        include "plugin.xml"
+        expand(
+                id: project.name,
+                version: project.version
+        )
+    }
+}
