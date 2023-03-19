@@ -4,7 +4,6 @@ import com.elovirta.dita.markdown.DitaRenderer;
 import com.elovirta.dita.markdown.MarkdownParser;
 import com.elovirta.dita.markdown.MarkdownParserImpl;
 import com.elovirta.dita.markdown.SchemaProvider;
-
 import com.vladsch.flexmark.ext.abbreviation.AbbreviationExtension;
 import com.vladsch.flexmark.ext.anchorlink.AnchorLinkExtension;
 import com.vladsch.flexmark.ext.attributes.AttributesExtension;
@@ -35,6 +34,7 @@ public class AcmeSchemaProvider implements SchemaProvider {
     @Override
     public MarkdownParser createMarkdownParser(URI schema) {
         return new MarkdownParserImpl(new MutableDataSet()
+                // See https://github.com/vsch/flexmark-java/wiki/Extensions#definition-lists
                 .set(Parser.EXTENSIONS, asList(
                         AbbreviationExtension.create(),
                         AnchorLinkExtension.create(),
@@ -53,7 +53,15 @@ public class AcmeSchemaProvider implements SchemaProvider {
                 .set(TablesExtension.APPEND_MISSING_COLUMNS, false)
                 .set(TablesExtension.DISCARD_EXTRA_COLUMNS, true)
                 .set(TablesExtension.HEADER_SEPARATOR_COLUMN_MATCH, true)
-                .set(DitaRenderer.SHORTDESC_PARAGRAPH, true)
+                // See https://github.com/jelovirt/org.lwdita/wiki/Configuring-Options
+                .set(DitaRenderer.FIX_ROOT_HEADING, false)
+                .set(DitaRenderer.SHORTDESC_PARAGRAPH, false)
+                .set(DitaRenderer.ID_FROM_YAML, false)
+                .set(DitaRenderer.LW_DITA, false)
+                .set(DitaRenderer.SPECIALIZATION, false)
+                .set(DitaRenderer.SPECIALIZATION_CONCEPT, false)
+                .set(DitaRenderer.SPECIALIZATION_TASK, false)
+                .set(DitaRenderer.SPECIALIZATION_REFERENCE, false)
                 .toImmutable());
     }
 }

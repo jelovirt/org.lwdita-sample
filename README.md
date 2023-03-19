@@ -23,4 +23,4 @@ Where `<USERNAME>` is your GitHub username and `<TOKEN>` is the personal access 
    ```shell
    ./gradlew dist
    ```
-   Plug-in distribution is created in `build/distributions/org.lwdita.example-1.0.0.zip`.
+   Plug-in distribution is created in `build/distributions/com.acme-1.0.0.zip`.
